@@ -1,3 +1,3 @@
-- Nom:
-- Prénom:
-- URL vercel: 
+- Nom: Loddo
+- Prénom: Enzo
+- URL vercel: http://localhost:4321/
