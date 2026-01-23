@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import Layout from '../layouts/Layout.astro';
+import OffreCard from '../components/OffreCard.astro';
 
 
 
@@ -49,19 +50,9 @@ const offres = [
 
 
 <div>
-  <ul>
     {offres.map((offre) => (
-      <li>{offre.adresse}</li>
-      <li>{offre.favori}</li>
-      <li>{offre.id}</li>
-      <li>{offre.nbChambres}</li>
-      <li>{offre.nbSdb}</li>
-      <li>{offre.prix}</li>
-      <li>{offre.surface}</li>
-      <li>{offre.imgUrl}</li>
-
+        <OffreCard offre={offre} />
     ))}
-  </ul>
 </div>
 
 
