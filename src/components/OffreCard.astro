@@ -1,19 +1,14 @@
 ---
-    const offre = Astro.props.offre;
+const { offre } = Astro.props;
+import PbImage from './PbImage.astro';
 ---
-
 
 <div>
   <ul>
       <li>{offre.Nom_maison}</li>
-      <li>{offre.Prix}</li>
-      <li>{offre.Images}</li>
-      <li>{offre.Nombre_de_chambres}</li>
-      <li>{offre.Nombre_de_salle_de_bains}</li>
-      <li>{offre.Adresse}</li>
-      <li>{offre.Superficie}</li>
-      <li>{offre.Favori}</li>
+    
+      <PbImage record={offre} recordImage={offre.Images[0]} />     
+      
   </ul>
 </div>
-
     
