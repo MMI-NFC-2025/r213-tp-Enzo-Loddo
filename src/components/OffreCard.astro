@@ -1,18 +1,18 @@
 ---
-const { offre } = Astro.props;
+    const offre = Astro.props.offre;
 ---
 
 
 <div>
   <ul>
-      <li>{offre.adresse}</li>
-      <li>{offre.favori}</li>
-      <li>{offre.id}</li>
-      <li>{offre.nbChambres}</li>
-      <li>{offre.nbSdb}</li>
-      <li>{offre.prix}</li>
-      <li>{offre.surface}</li>
-      <li>{offre.imgUrl}</li>
+      <li>{offre.Nom_maison}</li>
+      <li>{offre.Prix}</li>
+      <li>{offre.Images}</li>
+      <li>{offre.Nombre_de_chambres}</li>
+      <li>{offre.Nombre_de_salle_de_bains}</li>
+      <li>{offre.Adresse}</li>
+      <li>{offre.Superficie}</li>
+      <li>{offre.Favori}</li>
   </ul>
 </div>
 
