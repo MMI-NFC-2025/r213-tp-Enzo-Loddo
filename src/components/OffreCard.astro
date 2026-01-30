@@ -3,12 +3,26 @@ const { offre } = Astro.props;
 import PbImage from './PbImage.astro';
 ---
 
-<div>
-  <ul>
-      <li>{offre.Nom_maison}</li>
-    
-      <PbImage record={offre} recordImage={offre.Images[0]} />     
+<div class="card bg-white shadow-md rounded-lg p-4 mb-4">
+  <ul class="list-none space-y-2">
+      <li class="text-xl font-bold">{offre.Nom_maison}</li>
       
+      <div class="my-4">
+          <PbImage record={offre} recordImage={offre.Images[0]} />
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mb-4">
+          {offre.Images[1] && <PbImage record={offre} recordImage={offre.Images[1]} />}
+          {offre.Images[2] && <PbImage record={offre} recordImage={offre.Images[2]} />}
+      </div>
+
+     
+      <li class="mt-2">
+          {offre.Favori ? (
+              <span class="text-yellow-500 font-bold">★ Favori</span>
+          ) : (
+              <span class="text-gray-400">☆ Non favori</span>
+          )}
+      </li>
   </ul>
 </div>
-    
