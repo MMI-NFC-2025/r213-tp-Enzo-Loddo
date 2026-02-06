@@ -27,3 +27,16 @@ export async function getOffre(id) {
         return null;
     }
 }
+
+
+export async function getOffresParSurface(surface) {
+    try {
+        const records = await db.collection('Maison').getFullList({
+            filter: `Superficie > ${surface}`
+        });
+        return records; // <--- IMPORTANT : Juste 'records', pas 'records.items'
+    } catch (error) {
+        console.error('Erreur surface:', error);
+        return []; // <--- IMPORTANT : Toujours renvoyer un tableau vide en cas d'erreur
+    }
+}
