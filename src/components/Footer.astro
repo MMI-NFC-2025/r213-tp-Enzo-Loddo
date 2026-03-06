@@ -1,0 +1,32 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-gray-300 py-8 mt-12 border-t border-gray-800">
+    <div class="container mx-auto px-4 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            
+            <div class="text-center md:text-left">
+                <h3 class="text-2xl font-bold text-white tracking-wide">ImmoDream</h3>
+                <p class="text-sm text-gray-400 mt-2">Trouvez la maison de vos rêves avec nos experts.</p>
+            </div>
+            
+            <ul class="flex flex-wrap justify-center gap-6 font-medium">
+                <li>
+                    <a href="/" class="hover:text-indigo-400 transition-colors duration-300">Accueil</a>
+                </li>
+                <li>
+                    <a href="/agents" class="hover:text-indigo-400 transition-colors duration-300">Nos Agents</a>
+                </li>
+                <li>
+                    <a href="/offres/add" class="hover:text-indigo-400 transition-colors duration-300">Ajouter une offre</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
+            &copy; {currentYear} ImmoDream. Tous droits réservés.
+        </div>
+    </div>
+</footer>

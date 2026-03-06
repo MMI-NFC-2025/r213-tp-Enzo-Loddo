@@ -1,0 +1,87 @@
+---
+import '../../styles/global.css'
+import { addOffre } from '../../js/backend.mjs';
+import Layout from '../../layouts/Layout.astro';
+
+let message = '';
+if (Astro.request.method === "POST") {
+    const formData = await Astro.request.formData();
+    const response = await addOffre(formData);
+    // On récupère le message, ou on met un message par défaut si l'API n'en renvoie pas
+    message = response.message || "L'offre a été ajoutée avec succès !"; 
+}
+---
+
+<Layout titre="Ajouter une offre">
+    <div class="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg mt-10 border border-gray-100 mb-10">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Ajouter une nouvelle offre</h1>
+
+        {message && (
+            <div class="mb-6 p-4 bg-green-50 text-green-700 border border-green-200 rounded-lg flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <p class="font-medium">{message}</p>
+            </div>
+        )}
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            
+            <div>
+                <label for="Nom_maison" class="block text-sm font-medium text-gray-700 mb-1">Nom de la maison <span class="text-red-500">*</span></label>
+                <input type="text" id="Nom_maison" name="Nom_maison" placeholder="Ex: Magnifique villa sur la plage" required 
+                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="Prix" class="block text-sm font-medium text-gray-700 mb-1">Prix (€)</label>
+                    <input type="number" id="Prix" name="Prix" placeholder="Ex: 350000" 
+                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+                </div>
+                <div>
+                    <label for="Superficie" class="block text-sm font-medium text-gray-700 mb-1">Superficie (m²)</label>
+                    <input type="number" id="Superficie" name="Superficie" placeholder="Ex: 120" 
+                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="Nombre_de_chambres" class="block text-sm font-medium text-gray-700 mb-1">Nombre de chambres</label>
+                    <input type="number" id="Nombre_de_chambres" name="Nombre_de_chambres" placeholder="Ex: 4" 
+                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+                </div>
+                <div>
+                    <label for="Nombre_de_salle_de_bains" class="block text-sm font-medium text-gray-700 mb-1">Salles de bains</label>
+                    <input type="number" id="Nombre_de_salle_de_bains" name="Nombre_de_salle_de_bains" placeholder="Ex: 2" 
+                        class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+                </div>
+            </div>
+
+            <div>
+                <label for="Adresse" class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
+                <input type="text" id="Adresse" name="Adresse" placeholder="Ex: 123 Rue de la Mer, 75000 Paris" 
+                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200" />
+            </div>
+
+            <div>
+                <label for="Images" class="block text-sm font-medium text-gray-700 mb-1">Images de la maison</label>
+                <input type="file" id="Images" name="Images" accept="image/*" multiple
+                    class="block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" />
+                <p class="text-xs text-gray-500 mt-1">Vous pouvez sélectionner plusieurs images.</p>
+            </div>
+
+            <div class="flex items-center">
+                <input type="checkbox" id="favori" name="favori" value="true" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                <label for="favori" class="ml-2 block text-sm text-gray-900">Mettre en favori par défaut</label>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-transform transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Ajouter l'offre
+                </button>
+            </div>
+        </form>
+    </div>
+</Layout>

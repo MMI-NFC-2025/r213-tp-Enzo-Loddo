@@ -3,7 +3,7 @@ const { offre } = Astro.props;
 import PbImage from './PbImage.astro';
 ---
 
-<div class="card bg-white shadow-md rounded-lg p-4 mb-4">
+<div class="card bg-white shadow-md rounded-lg p-4 mb-4 relative pb-12">
   <ul class="list-none space-y-2">
       <li class="text-xl font-bold">{offre.Nom_maison}</li>
       
@@ -16,18 +16,40 @@ import PbImage from './PbImage.astro';
           {offre.Images[2] && <PbImage record={offre} recordImage={offre.Images[2]} />}
       </div>
 
-     
-      <li class="mt-2">
-          {offre.Favori ? (
-              <span class="text-yellow-500 font-bold">★ Favori</span>
-          ) : (
-              <span class="text-gray-400">☆ Non favori</span>
-          )}
-
-
-         <a href={`/offres/${offre.id}`}>Voir plus</a>
-
-         
+      <li class="mt-2 text-right">
+         <a href={`/offres/${offre.id}`} class="text-blue-500 hover:underline">Voir plus</a>
       </li>
   </ul>
+
+  <button class="favoriteButton absolute bottom-0 left-0 p-3 text-3xl hover:scale-110 transition-transform" data-offre={JSON.stringify(offre)}>
+      <span class="favorite-icon">{offre.favori ? "⭐" : "☆"}</span>
+  </button>
 </div>
+
+<script>
+    //@ts-nocheck
+    import { setFavori } from "../js/backend.mjs";
+    
+    const favoriteButtons = document.querySelectorAll(".favoriteButton");
+
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const offreData = JSON.parse(button.dataset.offre || '{}');
+            const newFavori = !offreData.favori;
+
+            // Mise à jour dans PocketBase
+            await setFavori(offreData);
+
+            // On cible le span qui contient l'emoji
+            const favIcon = button.querySelector('.favorite-icon');
+            if (favIcon) {
+                // On remplace le texte par la bonne étoile
+                favIcon.textContent = newFavori ? "⭐" : "☆";
+            }
+            
+            // Mise à jour locale pour le prochain clic
+            offreData.favori = newFavori;
+            button.dataset.offre = JSON.stringify(offreData);
+        });
+    });
+</script>

@@ -1,0 +1,29 @@
+---
+//@ts-nocheck
+import Layout from '../../layouts/Layout.astro';
+import { db } from '../../js/backend.mjs';
+
+// Récupération de la liste
+const agents = await db.collection('agent').getFullList();
+---
+
+<Layout title="Nos Experts">
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-extrabold mb-10 text-slate-900">Nos Agents</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {agents.map((agent) => (
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:border-indigo-300 transition-all">
+                    <h2 class="text-2xl font-bold text-indigo-900">
+                        {agent.nom} {agent.prenom}
+                    </h2>
+                    <p class="text-slate-500 mb-4">{agent.email}</p>
+                    
+                    <a href={`/agents/${agent.id}`} class="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl text-sm font-bold hover:bg-indigo-600 hover:text-white transition-colors">
+                        Voir ses annonces
+                    </a>
+                </div>
+            ))}
+        </div>
+    </div>
+</Layout>

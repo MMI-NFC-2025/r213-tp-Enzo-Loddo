@@ -1,7 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const db = new PocketBase('http://127.0.0.1:8090');
-
+export const db = new PocketBase("http://127.0.0.1:8090");
 export async function getOffres() {
     try {
         let data = await db.collection('Maison').getFullList({
@@ -34,9 +33,36 @@ export async function getOffresParSurface(surface) {
         const records = await db.collection('Maison').getFullList({
             filter: `Superficie > ${surface}`
         });
-        return records; // <--- IMPORTANT : Juste 'records', pas 'records.items'
+        return records; 
     } catch (error) {
         console.error('Erreur surface:', error);
-        return []; // <--- IMPORTANT : Toujours renvoyer un tableau vide en cas d'erreur
+        return []; 
+    }
+}
+
+export async function addOffre(house) {
+    try {
+        await db.collection('maison').create(house);
+        return {
+            success: true,
+            message: 'Offre ajoutée avec succès'
+        };
+    } catch (error) {
+        console.log('Une erreur est survenue en ajoutant la maison', error);
+        return {
+            success: false,
+            message: 'Une erreur est survenue en ajoutant la maison'
+        };
+    }
+}
+
+export async function setFavori(house) {
+
+    try {
+        await db.collection('maison').update(house.id, {
+            favori: !house.favori
+        });
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour du favori :", error);
     }
 }
